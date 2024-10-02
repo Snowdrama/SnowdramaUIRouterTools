@@ -7,7 +7,7 @@ namespace Snowdrama.UI
 {
     public class UIRoute : MonoBehaviour
     {
-        [SerializeField] private UIRouter _router;
+        [SerializeField] private UIRoutingSystem _routingSystem;
         [SerializeField] private string routeSegment;
         [SerializeField] private GameObject mainContent;
         [SerializeField] private bool startEnabled = false;
@@ -16,10 +16,10 @@ namespace Snowdrama.UI
         [SerializeField] private Selectable objectToSelectOnOpen;
         private void Start()
         {
-            _router.RegisterRoute(routeSegment, this);
+            _routingSystem.GetRouter().RegisterRoute(routeSegment, this);
             if (startEnabled)
             {
-                _router.OpenRoute(routeSegment);
+                _routingSystem.GetRouter().OpenRoute(routeSegment);
                 mainContent.SetActive(true);
             }
             else
@@ -30,7 +30,7 @@ namespace Snowdrama.UI
 
         private void OnDestroy()
         {
-            _router.UnregisterRoute(routeSegment);
+            _routingSystem.GetRouter().UnregisterRoute(routeSegment);
         }
 
         public void OpenRoute()
